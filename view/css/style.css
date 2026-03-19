@@ -1,0 +1,116 @@
+/* --- RESET Y VARIABLES --- */
+:root {
+    --primario: #1a365d;
+    --secundario: #e53e3e;
+    --fondo-claro: #f7fafc;
+    --texto: #2d3748;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+
+/* El deslizamiento suave al hacer clic en el menú */
+html { scroll-behavior: smooth; }
+body { color: var(--texto); }
+
+/* --- NAVEGACIÓN (Arriba a la derecha) --- */
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Separa el logo de los links */
+    align-items: center;
+    padding: 15px 50px;
+    background: #ffffff;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.logo h2 { color: var(--primario); }
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    gap: 25px; /* Espacio entre los botones */
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--primario);
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover { color: var(--secundario); }
+
+/* Botón de Tienda destacado en el menú */
+.btn-venta {
+    background-color: var(--secundario);
+    color: white !important;
+    padding: 10px 20px;
+    border-radius: 25px;
+    box-shadow: 0 4px 6px rgba(229, 62, 62, 0.3);
+}
+.btn-venta:hover { background-color: #c53030; transform: translateY(-2px); }
+
+/* --- SECCIONES GLOBALES --- */
+section { padding: 100px 50px 60px; min-height: 80vh; }
+.titulo-seccion { text-align: center; font-size: 2.5rem; margin-bottom: 40px; color: var(--primario); }
+.text-white { color: white; }
+.seccion-clara { background-color: var(--fondo-claro); }
+.seccion-oscura { background-color: var(--primario); color: white; }
+
+/* --- HERO (Inicio) --- */
+.hero {
+    background: linear-gradient(rgba(26, 54, 93, 0.8), rgba(26, 54, 93, 0.8)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1200') center/cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+.hero h1 { font-size: 3.5rem; margin-bottom: 20px; }
+.hero p { font-size: 1.2rem; margin-bottom: 30px; }
+.btn-main { background: var(--secundario); color: white; padding: 15px 30px; border-radius: 30px; text-decoration: none; font-size: 1.1rem; border: none; cursor: pointer; }
+
+/* --- GRIDS Y TARJETAS --- */
+.contenedor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.tarjeta-info, .tarjeta-curso, .tarjeta-perfil {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    text-align: center;
+    color: var(--texto);
+}
+
+.icono-curso { font-size: 3rem; margin-bottom: 15px; }
+.img-perfil { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 3px solid var(--primario); }
+.puesto { color: #718096; font-size: 0.9rem; margin-top: 5px; }
+
+/* --- GALERÍA --- */
+.galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.galeria img { width: 100%; border-radius: 10px; transition: transform 0.3s; }
+.galeria img:hover { transform: scale(1.05); }
+
+/* --- FORMULARIO --- */
+.formulario-container { max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+.form-contacto input, .form-contacto select, .form-contacto textarea {
+    width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #cbd5e0; border-radius: 5px;
+}
+.footer-escolar { background: #112240; color: white; text-align: center; padding: 20px; }
