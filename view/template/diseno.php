@@ -13,6 +13,10 @@
             <h2>🏫 MiEscuela</h2>
         </div>
         <ul class="nav-links">
+            <?php if(isset($_GET["ruta"]) && $_GET["ruta"] == "tienda"): ?>
+            <li><a href="index.php">🏠 Inicio</a></li>
+            <li><a href="#" class="btn-carrito-nav" onclick="toggleCarrito()">🛒 Carrito (<span id="contador-carrito">0</span>)</a></li>
+        <?php else: ?>
             <li><a href="#inicio">Inicio</a></li>
             <li><a href="#nosotros">Nosotros</a></li>
             <li><a href="#academico">Oferta Académica</a></li>
@@ -20,6 +24,7 @@
             <li><a href="#instalaciones">Instalaciones</a></li>
             <li><a href="#contacto">Contacto</a></li>
             <li><a href="tienda" class="btn-venta">🛒 Tienda</a></li>
+        <?php endif; ?>
         </ul>
     </nav>
 
@@ -43,5 +48,6 @@
     </footer>
 
     <script src="view/js/app.js"></script>
+    <script src="view/js/tienda.js"></script>
 </body>
 </html>
