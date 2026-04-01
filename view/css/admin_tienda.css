@@ -1,0 +1,192 @@
+:root {
+    --bg-main: #f4f7f9;        /* Gris galería claro */
+    --sand-accent: #fdf6e3;    /* Tono arena para detalles */
+    --azul-escuela: #0e1b38;   /* Tu azul institucional */
+    --blanco: #ffffff;
+    --texto-dark: #1e293b;
+    --gris-borde: #0e1b38;
+}
+
+/* Contenedor principal de la vista */
+#vista-tienda {
+    padding: 25px;
+    background-color: var(--bg-main);
+    min-height: 100vh;
+}
+
+/* Encabezado de la página */
+.page-title {
+    color: var(--azul-escuela);
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+
+.text-muted {
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+/* Tarjeta contenedora de la tabla */
+.table-responsive {
+    background: var(--blanco);
+    border-radius: 15px;
+    border: 1px solid var(--gris-borde);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+/* Estilo de la Tabla */
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background-color: #f8fafc;
+    color: #475569;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    padding: 15px;
+    border-bottom: 2px solid var(--gris-borde);
+}
+
+.table tbody tr {
+    transition: background-color 0.2s;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f5f9; /* Efecto sutil al pasar el mouse */
+}
+
+.table td {
+    padding: 15px;
+    vertical-align: middle;
+    color: var(--texto-dark);
+    border-bottom: 1px solid #f1f5f9;
+}
+
+/* Imagen del producto */
+.img-producto {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid var(--sand-accent);
+}
+
+/* Badges de Stock Estilo Pastel */
+.badge {
+    padding: 6px 12px;
+    border-radius: 30px;
+    font-weight: 500;
+}
+
+.bg-warning {
+    background-color: #fef3c7 !important; /* Naranja pastel */
+    color: #92400e !important;
+}
+
+.bg-light {
+    background-color: var(--sand-accent) !important;
+    color: #5d4037 !important;
+}
+
+/* Botones de Acción */
+.btn-outline-primary {
+    border-color: #cbd5e1;
+    color: var(--azul-escuela);
+    font-weight: 500;
+    border-radius: 8px;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--azul-escuela);
+    border-color: var(--azul-escuela);
+    color: white;
+}
+
+.btn-outline-danger {
+    border-color: #fee2e2;
+    color: #ef4444;
+    border-radius: 8px;
+}
+
+.btn-outline-danger:hover {
+    background-color: #ef4444;
+    color: white;
+}
+
+/* Fondo oscuro que cubre la pantalla */
+.modal-overlay {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Sombra transparente */
+    backdrop-filter: blur(4px); /* Efecto de desenfoque */
+}
+
+/* Caja del Modal */
+.modal-content-custom {
+    background-color: #ffffff;
+    margin: 10% auto;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    animation: aparecer 0.3s ease;
+}
+
+/* Encabezado con tu tono Arena */
+.modal-header-custom {
+    background-color: #fdf6e3; /* Color Arena */
+    padding: 15px 20px;
+    border-radius: 12px 12px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header-custom h3 { margin: 0; color: #0e1b38; font-size: 1.2rem; }
+
+/* Cuerpo del formulario */
+.modal-body-custom { padding: 20px; }
+
+.input-group { margin-bottom: 15px; }
+.input-group label { display: block; margin-bottom: 5px; font-weight: 600; color: #475569; }
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    background-color: #f8fafc; /* Gallery Gray */
+}
+
+/* Botones personalizados */
+.modal-footer-custom {
+    padding: 15px 20px;
+    text-align: right;
+    border-top: 1px solid #f1f5f9;
+}
+
+.btn-cancelar { background: none; border: none; cursor: pointer; color: #64748b; margin-right: 15px; }
+.btn-guardar { 
+    background-color: #0e1b38; /* Tu Azul */
+    color: white; 
+    border: none; 
+    padding: 10px 20px; 
+    border-radius: 6px; 
+    cursor: pointer; 
+}
+
+/* Animación */
+@keyframes aparecer {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
