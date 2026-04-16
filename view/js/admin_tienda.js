@@ -67,7 +67,8 @@ $(document).on("submit", "#formEditar", function(e) {
 });
 
 // ==================== ELIMINAR PRODUCTO ====================
-$(document).on("click", ".btn-eliminar", function() {
+// Solo aplica dentro de la vista de tienda para no interceptar botones de otras secciones.
+$(document).on("click", "#vista-tienda .btn-eliminar", function() {
     const id = $(this).attr("data-id");
     const nombre = $(this).attr("data-nombre");
     

@@ -36,6 +36,40 @@ document.addEventListener('DOMContentLoaded', () => {
     activarPreview('banner_video', true);
     activarPreview('foto_perfil', false);
 
+    // --- 1.1 MOSTRAR NOMBRE DE ARCHIVO SELECCIONADO EN DISEÑO ---
+    function activarNombreArchivoEnDiseno() {
+        const vistaDiseno = document.getElementById('vista-diseno');
+        if (!vistaDiseno) return;
+
+        const fileInputs = vistaDiseno.querySelectorAll('input[type="file"]');
+        fileInputs.forEach((input) => {
+            input.addEventListener('change', () => {
+                const nombre = input.files && input.files.length > 0
+                    ? (input.files.length > 1
+                        ? input.files.length + ' archivos seleccionados'
+                        : input.files[0].name)
+                    : 'Ningun archivo seleccionado';
+
+                let indicador = input.parentElement.querySelector('.file-name-selected');
+                if (!indicador) {
+                    indicador = document.createElement('div');
+                    indicador.className = 'file-name-selected';
+                    input.parentElement.appendChild(indicador);
+                }
+
+                indicador.textContent = 'Archivo: ' + nombre;
+            });
+        });
+    }
+
+    activarNombreArchivoEnDiseno();
+
+    // Mostrar vista inicial segun query (?vista=mensajes), o inicio por defecto
+    const vistaParam = new URLSearchParams(window.location.search).get('vista');
+    const vistasPermitidas = ['inicio', 'diseno', 'mensajes', 'tienda', 'usuarios', 'accesos'];
+    const vistaInicial = vistasPermitidas.includes(vistaParam) ? vistaParam : 'inicio';
+    cambiarVista(vistaInicial);
+
 });
 
 // --- 2. MOTOR DE CAMBIO DE VISTAS ---
@@ -66,52 +100,14 @@ function cambiarVista(vistaDestino) {
         btnActivar.classList.add('active');
     }
 
-    // --- LÓGICA DE GESTIÓN DE OFERTA ACADÉMICA ---
-    const selectorCarrera = document.getElementById('selector-carrera');
-    if (selectorCarrera) {
-        
-        // Elementos del formulario a actualizar
-        const inputsCarrera = {
-            icono: document.getElementById('edit_icono'),
-            nivel: document.getElementById('edit_nivel'),
-            nombre: document.getElementById('edit_nombre'),
-            descCorta: document.getElementById('edit_desc_corta'),
-            descLarga: document.getElementById('edit_desc_larga'),
-            ext1: document.getElementById('edit_extra_1'),
-            ext2: document.getElementById('edit_extra_2'),
-            ext3: document.getElementById('edit_extra_3')
-        };
-
-        // Bases de datos simulada (El backend lo hará con PHP/MySQL)
-        const bdSimulada = {
-            "1": { icon: "🤖", niv: "Ingeniería", nom: "Robótica", dc: "Diseña, construye y programa sistemas automatizados y robóticos para la industria 4.0.", dl: "El programa de Ingeniería en Robótica te prepara para el futuro tecnológico...", e1: "Duración: 8 Semestres", e2: "Modalidad: Presencial / Híbrida", e3: "Titulación Directa disponible" },
-            "2": { icon: "💻", niv: "Licenciatura", nom: "Negocios Digitales", dc: "Domina el e-commerce, marketing digital y gestión de proyectos tecnológicos.", dl: "Domina el mundo del comercio electrónico. Aprenderás a crear estrategias de marketing...", e1: "Duración: 9 Semestres", e2: "Modalidad: 100% Online", e3: "Prácticas Profesionales incluidas" },
-            "3": { icon: "👨‍💻", niv: "Ingeniería", nom: "Desarrollo de Software", dc: "Crea aplicaciones web, móviles y sistemas de información de alto rendimiento.", dl: "Conviértete en un experto en código. Aprende lenguajes modernos como Python, JavaScript y Java...", e1: "Duración: 8 Semestres", e2: "Modalidad: Presencial", e3: "Certificaciones AWS/Azure" }
-        };
-
-        selectorCarrera.addEventListener('change', (e) => {
-            const idSeleccionado = e.target.value;
-
-            if (idSeleccionado === 'nueva') {
-                // Si elige "Agregar nueva...", limpiamos todos los campos
-                for (let key in inputsCarrera) {
-                    inputsCarrera[key].value = '';
-                }
-                inputsCarrera.icono.focus(); // Ponemos el cursor en el primer campo
-            } else {
-                // Si elige una existente, cargamos sus datos simulados
-                const datos = bdSimulada[idSeleccionado];
-                if (datos) {
-                    inputsCarrera.icono.value = datos.icon;
-                    inputsCarrera.nivel.value = datos.niv;
-                    inputsCarrera.nombre.value = datos.nom;
-                    inputsCarrera.descCorta.value = datos.dc;
-                    inputsCarrera.descLarga.value = datos.dl;
-                    inputsCarrera.ext1.value = datos.e1;
-                    inputsCarrera.ext2.value = datos.e2;
-                    inputsCarrera.ext3.value = datos.e3;
-                }
-            }
-        });
+    // Mantener la vista activa en la URL para que al refrescar no salte a otra sección.
+    if (vistasPermitidasURL().includes(vistaDestino)) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('vista', vistaDestino);
+        window.history.replaceState({}, '', url.toString());
     }
+}
+
+function vistasPermitidasURL() {
+    return ['inicio', 'diseno', 'mensajes', 'tienda', 'usuarios', 'accesos'];
 }

@@ -54,6 +54,30 @@ body { color: var(--texto); }
 }
 .btn-venta:hover { background-color: #B25B42; transform: translateY(-2px); }
 
+.nav-link-inicio {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid rgba(26, 54, 93, 0.18);
+    background: #ffffff;
+    color: var(--primario);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+.nav-link-inicio:hover {
+    color: var(--primario) !important;
+    transform: translateY(-2px);
+    border-color: rgba(178, 91, 66, 0.5);
+    box-shadow: 0 10px 20px rgba(26, 54, 93, 0.12);
+}
+
+.icono-inicio {
+    width: 20px;
+    height: 20px;
+}
+
 /* --- SECCIONES GLOBALES --- */
 section { padding: 100px 50px 60px; min-height: 80vh; }
 .titulo-seccion { text-align: center; font-size: 2.5rem; margin-bottom: 40px; color: var(--primario); }

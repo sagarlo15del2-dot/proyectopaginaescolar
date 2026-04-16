@@ -80,6 +80,25 @@ body { background-color: var(--gris-fondo); color: var(--texto-oscuro); display:
     filter: grayscale(100%) opacity(0.7); /* Iconos más discretos por defecto */
 }
 
+.menu-item .icon.icon-with-dot {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-item .icon .badge-dot {
+    position: absolute;
+    top: -2px;
+    right: -8px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ef4444;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.12);
+}
+
 .menu-item .text {
     font-size: 0.65rem;
     font-weight: 600;
@@ -602,7 +621,7 @@ input:checked + .slider:before {
 
 /* Área de la Foto (Izquierda) */
 .area-foto-upload {
-    flex: 0 0 150px; /* Ancho fijo para la foto */
+    flex: 0 0 40px; /* Ancho fijo para la foto */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -654,6 +673,87 @@ input:checked + .slider:before {
     opacity: 0;
     position: absolute;
     z-index: -1;
+}
+
+/* =========================================
+   UPLOADS PROFESIONALES EN SECCION DISENO
+   ========================================= */
+#vista-diseno .label-archivo-custom {
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    border: 1px solid #274c7d;
+    box-shadow: 0 6px 14px rgba(26, 54, 93, 0.18);
+}
+
+#vista-diseno .label-archivo-custom:hover {
+    background-color: #2563eb;
+    border-color: #2563eb;
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.26);
+    transform: translateY(-1px);
+}
+
+#vista-diseno input[type="file"].input-admin {
+    padding: 8px;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    color: #334155;
+}
+
+#vista-diseno input[type="file"].input-admin::file-selector-button {
+    border: 1px solid #1e3a5f;
+    background: #1a365d;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.85rem;
+    border-radius: 999px;
+    padding: 8px 14px;
+    margin-right: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#vista-diseno input[type="file"].input-admin::file-selector-button:hover {
+    background: #2563eb;
+    border-color: #2563eb;
+}
+
+#vista-diseno input[type="file"].input-admin::-webkit-file-upload-button {
+    border: 1px solid #1e3a5f;
+    background: #1a365d;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.85rem;
+    border-radius: 999px;
+    padding: 8px 14px;
+    margin-right: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#vista-diseno input[type="file"].input-admin:hover {
+    border-color: #94a3b8;
+    background: #ffffff;
+}
+
+#vista-diseno input[type="file"].input-admin:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+#vista-diseno .file-name-selected {
+    margin-top: 8px;
+    font-size: 0.82rem;
+    color: #334155;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    padding: 7px 10px;
+    line-height: 1.3;
+    word-break: break-word;
 }
 
 /* Área de Datos (Derecha - sigue siendo grid) */
@@ -771,4 +871,145 @@ input:checked + .slider:before {
     font-weight: bold;
     color: var(--azul-acento);
     background-color: #eff6ff;
+}
+
+/* ==========================================
+   MODAL EDITAR USUARIO
+   ========================================== */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeInOverlay 0.2s ease;
+}
+
+@keyframes fadeInOverlay {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.modal-editar-usuario {
+    background: var(--blanco-puro);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.18);
+    animation: slideUpModal 0.25s ease;
+    overflow: hidden;
+}
+
+@keyframes slideUpModal {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.modal-header-eu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 28px 18px;
+    border-bottom: 1px solid var(--gris-borde);
+}
+
+.modal-header-eu h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--azul-escuela);
+    margin: 0;
+}
+
+.modal-cerrar {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--texto-gris);
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.modal-cerrar:hover {
+    background: #f1f5f9;
+    color: var(--rojo-escuela);
+}
+
+.modal-body-eu {
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.modal-footer-eu {
+    padding: 16px 28px 22px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    border-top: 1px solid var(--gris-borde);
+}
+
+.btn-modal-cancelar {
+    background: #f1f5f9;
+    color: var(--texto-oscuro);
+    border: 1px solid var(--gris-borde);
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-modal-cancelar:hover {
+    background: #e2e8f0;
+}
+
+.btn-modal-guardar {
+    background: var(--azul-escuela);
+    color: #ffffff;
+    border: none;
+    padding: 10px 26px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+}
+
+.btn-modal-guardar:hover {
+    background: var(--azul-acento);
+    transform: translateY(-1px);
+}
+
+/* Fotos de usuario en la tabla */
+.avatar-tabla {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--gris-borde);
+    display: block;
+    margin: 0 auto;
+}
+
+.avatar-placeholder {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: var(--azul-escuela);
+    color: var(--blanco-puro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    margin: 0 auto;
 }

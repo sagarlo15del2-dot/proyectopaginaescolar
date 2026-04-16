@@ -1,9 +1,11 @@
+<?php $__mostrarTodo = !isset($permisosVista); ?>
 <div id="vista-diseno" class="dashboard-content" style="display: none;">
     <h1 class="page-title">🎨 Editar Página Principal</h1>
     <p style="color: var(--texto-gris); margin-bottom: 30px;">Actualiza los textos e imágenes que ven los visitantes en la página pública.</p>
     
     <form action="#" method="POST" enctype="multipart/form-data">
-        
+
+        <?php if ($__mostrarTodo || !empty($permisosVista['p_banner'])): ?>
         <div class="card form-card">
             <h3 class="form-section-title">🖼️ Banner Principal (Inicio)</h3>
             
@@ -38,7 +40,9 @@
                 </div>
             </div>
         </div>
+        <?php endif; ?>
 
+        <?php if ($__mostrarTodo || !empty($permisosVista['p_nosotros'])): ?>
         <div class="card form-card" style="margin-top: 25px;">
             <h3 class="form-section-title">🏫 Nosotros y Valores</h3>
             <div class="form-grid-2">
@@ -61,6 +65,8 @@
             </div>
         </div>
 
+        <?php endif; ?>
+        <?php if ($__mostrarTodo || !empty($permisosVista['p_oferta'])): ?>
         <div class="card form-card" style="margin-top: 25px;">
             <h3 class="form-section-title">🎒 Oferta Académica</h3>
             <p style="font-size: 0.85rem; color: var(--texto-gris); margin-bottom: 15px;">Selecciona una carrera existente para modificarla o agrega una nueva.</p>
@@ -130,6 +136,9 @@
             </div>
         </div>
 
+        <?php endif; ?>
+
+        <?php if ($__mostrarTodo || !empty($permisosVista['p_oferta'])): ?>
         <div class="card form-card" style="margin-top: 25px;">
             <h3 class="form-section-title">📰 Gestión de Noticias</h3>
             <p style="font-size: 0.85rem; color: var(--texto-gris); margin-bottom: 15px;">Agrega o edita las noticias que aparecen en la página principal.</p>
@@ -172,6 +181,9 @@
             </div>
         </div>
 
+        <?php endif; ?>
+
+        <?php if ($__mostrarTodo || !empty($permisosVista['p_instalaciones'])): ?>
         <div class="card form-card" style="margin-top: 25px;">
             <h3 class="form-section-title">🏢 Instalaciones Principales</h3>
             <p style="font-size: 0.85rem; color: var(--texto-gris); margin-bottom: 15px;">Sube las fotos de fondo para tus 3 categorías principales.</p>
@@ -195,6 +207,9 @@
             <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 10px;">*Los sub-espacios de cada instalación se administrarán desde la base de datos.</p>
         </div>
 
+        <?php endif; ?>
+
+        <?php if ($__mostrarTodo || !empty($permisosVista['p_contacto'])): ?>
         <div class="card form-card" style="margin-top: 25px; margin-bottom: 25px;">
             <h3 class="form-section-title">📞 Información de Contacto</h3>
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
@@ -212,6 +227,8 @@
                 </div>
             </div>
         </div>
+
+        <?php endif; ?>
 
         <div style="margin-top: 30px; text-align: right;">
             <button type="button" class="btn-guardar">💾 Guardar Cambios Generales</button>

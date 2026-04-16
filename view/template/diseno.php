@@ -13,6 +13,26 @@ if(isset($_GET["ruta"])){
         include "view/template/procesar-login.php"; 
         exit();
     }
+    if($_GET["ruta"] == "procesar-contacto"){
+        include "view/template/procesar-contacto.php";
+        exit();
+    }
+    if($_GET["ruta"] == "login-usuarios" || $_GET["ruta"] == "acceso"){
+        include "view/template/acceso.php";
+        exit();
+    }
+    if($_GET["ruta"] == "panel-usuario"){
+        include "view/template/panel-usuario.php";
+        exit();
+    }
+    if($_GET["ruta"] == "salir-usuario"){
+        // Destruir solo la sesión de usuario, no la de admin
+        unset($_SESSION['usuarioLogueado'], $_SESSION['usuarioId'], $_SESSION['usuarioNombre'],
+              $_SESSION['usuarioEmail'], $_SESSION['usuarioRol'], $_SESSION['usuarioFoto'],
+              $_SESSION['usuarioPermisos']);
+        echo '<script>window.location = "index.php?ruta=acceso";</script>';
+        exit();
+    }
     if($_GET["ruta"] == "salir"){
         session_destroy();
         echo '<script>window.location = "index.php";</script>';
@@ -32,29 +52,23 @@ if(isset($_GET["ruta"])){
 
     <nav class="navbar">
         <div class="logo">
-            <h2><span onclick="abrirModalAdmin()" style="cursor: pointer;" title="Acceso Oculto">🏫</span> MiEscuela</h2>
+            <h2><a href="index.php?ruta=acceso" style="text-decoration:none; color:inherit;">🏫 MiEscuela</a></h2>
         </div>
         
         <ul class="nav-links">
             <?php if(isset($_GET["ruta"]) && $_GET["ruta"] == "tienda"): ?>
             <li>
-    <a href="index.php" class="nav-link-inicio">
-        <svg class="icono-inicio" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2h-5v-8H9v8H5a2 2 0 0 1-2-2z"></path>
-        </svg>
-    </a>
-</li>
-    <a href="#" class="btn-carrito-nav" onclick="toggleCarrito(event)">
-        <div class="carrito-icono-wrapper">
-            <svg class="carrito-icono" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="9" cy="21" r="1"></circle>
-                <circle cx="20" cy="21" r="1"></circle>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-            </svg>
-            <span class="carrito-contador-badge" id="contador-carrito">0</span>
-        </div>
-    </a>
-</li>
+                <a href="#" class="btn-carrito-nav" onclick="toggleCarrito(event)">
+                    <div class="carrito-icono-wrapper">
+                        <svg class="carrito-icono" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="9" cy="21" r="1"></circle>
+                            <circle cx="20" cy="21" r="1"></circle>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                        </svg>
+                        <span class="carrito-contador-badge" id="contador-carrito">0</span>
+                    </div>
+                </a>
+            </li>
         <?php else: ?>
             <li><a href="#inicio">Inicio</a></li>
             <li><a href="#nosotros">Nosotros</a></li>
@@ -100,20 +114,6 @@ if(isset($_GET["ruta"])){
             }
         });
 
-        function abrirModalAdmin() {
-            document.getElementById('modalAdmin').style.display = 'flex';
-        }
-
-        function cerrarModalAdmin() {
-            document.getElementById('modalAdmin').style.display = 'none';
-        }
-
-        window.onclick = function(event) {
-            let modal = document.getElementById('modalAdmin');
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
     </script>
 </body>
 </html>

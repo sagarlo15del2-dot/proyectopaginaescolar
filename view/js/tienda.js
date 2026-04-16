@@ -53,6 +53,9 @@ function toggleCarrito(event) {
 }
 
 function agregarAlCarrito() {
+    console.log("CLICK agregar carrito");
+    console.log("ID producto:", productoActualId);
+
     const nombre = document.getElementById('tituloModal').innerText;
     const precioTexto = document.getElementById('precioModal').innerText;
     const precio = parseFloat(precioTexto.replace(/[^\d.]/g, ''));
@@ -195,7 +198,9 @@ function confirmarCompra() {
         url: "/proyectopaginaescolar/ajax/comprar_carrito.php",
         type: "POST",
         contentType: "application/json", // Enviar como JSON
-        data: JSON.stringify({ carrito: datosCarrito }),
+        data: JSON.stringify({ 
+            carrito: datosCarrito, 
+            metodoPago: metodoPago }),
         dataType: "json",
         
         success: function(respuesta) {

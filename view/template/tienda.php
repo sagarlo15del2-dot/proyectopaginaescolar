@@ -147,7 +147,7 @@ $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $precioJS = "$" . number_format($prod['precio'], 2);
             $tieneTalla = !empty($prod['tallas']);
         ?>
-            <div class="producto-card" onclick="abrirModal('<?= $nombreJS ?>', '<?= $precioJS ?>', '<?= htmlspecialchars($prod['descripcion'] ?? 'Producto de alta calidad para la comunidad escolar.') ?>', '<?= $prod['imagen'] ?>', <?= $tieneTalla ? 'true' : 'false' ?>, <?= $prod['id'] ?>)">
+            <div class="producto-card">
                 <?php if ($indice === 0): ?>
                     <div class="producto-badge">✨ Destacado</div>
                 <?php endif; ?>
@@ -157,7 +157,16 @@ $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="producto-imagen">
                     <img src="<?= $prod['imagen'] ?>" alt="<?= $nombreJS ?>">
                     <div class="producto-overlay">
-                        <button class="btn-rapido">Ver detalles →</button>
+                        
+                    <button class="btn-rapido" onclick="abrirModal(
+                        '<?= $nombreJS ?>', 
+                        '<?= $precioJS ?>', 
+                        '<?= htmlspecialchars($prod['descripcion'] ?? 'Producto de alta calidad para la comunidad escolar.') ?>', 
+                        '<?= $prod['imagen'] ?>', 
+                        <?= $tieneTalla ? 'true' : 'false' ?>, 
+                        <?= (int)$prod['id'] ?>)">
+                        Ver detalles →
+                    </button>
                     </div>
                 </div>
                 <div class="producto-info">

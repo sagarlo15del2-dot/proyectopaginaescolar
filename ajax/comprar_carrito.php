@@ -42,6 +42,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Iniciar transacción
         $db->beginTransaction();
 
+        $metodoPago = $input['metodoPago'] ?? $_POST['metodoPago'] ?? null;
+        $totalCompra = 0;
+        foreach ($carrito as $item) {
+            $cantidadTmp = isset($item['cantidad']) ? intval($item['cantidad']) : 0;
+            $precioTmp = isset($item['precio']) ? floatval($item['precio']) : 0;
+            $totalCompra += $cantidadTmp * $precioTmp;
+        }
+
+        $insertCompra = $db->prepare(
+            "INSERT INTO compras (total, metodo_pago) VALUES (:total, :metodo_pago)"
+        );
+        $insertCompra->bindParam(":total", $totalCompra);
+        $insertCompra->bindParam(":metodo_pago", $metodoPago);
+        $insertCompra->execute();
+        $idCompra = $db->lastInsertId();
+
         foreach ($carrito as $item) {
             // Validar que el item tenga los campos necesarios
             if (!isset($item['id']) && !isset($item['nombre'])) {
@@ -91,6 +107,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $update->bindParam(":cantidad", $cantidad);
             $update->bindParam(":id", $id);
             $update->execute();
+
+            $subtotal = floatval($item['precio']) * intval($cantidad);
+            $detalle = $db->prepare(
+                "INSERT INTO detalle_compra (id_compra, producto, cantidad, precio, subtotal) VALUES (:id_compra, :producto, :cantidad, :precio, :subtotal)"
+            );
+            $detalle->bindParam(":id_compra", $idCompra);
+            $detalle->bindParam(":producto", $nombreProducto);
+            $detalle->bindParam(":cantidad", $cantidad);
+            $detalle->bindParam(":precio", $item['precio']);
+            $detalle->bindParam(":subtotal", $subtotal);
+            $detalle->execute();
         }
         
         // Confirmar transacción

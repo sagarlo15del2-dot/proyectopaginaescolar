@@ -3,34 +3,51 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// Llamamos al Modelo
 require_once "model/AdminModel.php";
+require_once "model/UsuarioModel.php";
+require_once "model/PermisosModel.php";
 
-// Verificamos que el formulario haya enviado datos
 if(isset($_POST["usuario"]) && isset($_POST["password"])){
-    
-    $usuario = trim($_POST["usuario"]);
+
+    $usuario  = trim($_POST["usuario"]);
     $password = trim($_POST["password"]);
 
-    // Le pedimos al modelo que vaya a MySQL a revisar
-    $respuesta = AdminModel::mdlIngresoAdmin($usuario, $password);
-
-    // Si la respuesta es verdadera (sí encontró al usuario)
-    if($respuesta){
-        
-        // Creamos la sesión oficial
-        $_SESSION["accesoAdmin"] = "ok";
-        $_SESSION["nombreAdmin"] = $respuesta["nombre"]; 
-        
-        // REDIRECCIÓN INFALIBLE AL PANEL
-        echo '<script>window.location = "index.php?ruta=admin";</script>';
-        
-    } else {
-        // Credenciales falsas
-        echo '<script>
-                alert("❌ Usuario o contraseña incorrectos");
-                window.location = "index.php";
-              </script>';
+    if(empty($usuario) || empty($password)){
+        echo '<script>window.location = "index.php?ruta=acceso&error=datos";</script>';
+        exit();
     }
+
+    // 1. Buscar en administradores (contraseña en texto plano)
+    $admin = AdminModel::mdlIngresoAdmin($usuario, $password);
+
+    if($admin){
+        $_SESSION["accesoAdmin"]  = "ok";
+        $_SESSION["nombreAdmin"] = $admin["nombre"];
+        echo '<script>window.location = "index.php?ruta=admin";</script>';
+        exit();
+    }
+
+    // 2. Buscar en usuarios (contraseña encriptada con bcrypt)
+    $usuarioObj = UsuarioModel::mdlLoginUsuario($usuario, $password);
+
+    if($usuarioObj){
+        $permisos = PermisosModel::mdlObtenerPermisos($usuarioObj['id']);
+        if(!$permisos) $permisos = [];
+
+        $_SESSION['usuarioLogueado'] = true;
+        $_SESSION['usuarioId']       = $usuarioObj['id'];
+        $_SESSION['usuarioNombre']   = $usuarioObj['nombre'];
+        $_SESSION['usuarioEmail']    = $usuarioObj['email'];
+        $_SESSION['usuarioRol']      = $usuarioObj['rol'];
+        $_SESSION['usuarioFoto']     = $usuarioObj['foto_perfil'];
+        $_SESSION['usuarioPermisos'] = $permisos;
+
+        echo '<script>window.location = "index.php?ruta=panel-usuario";</script>';
+        exit();
+    }
+
+    // 3. Nadie coincidió
+    $usuarioSafe = urlencode($usuario);
+    echo '<script>window.location = "index.php?ruta=acceso&error=credenciales&usuario=' . $usuarioSafe . '";</script>';
 }
 ?>

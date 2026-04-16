@@ -1,3 +1,8 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) { session_start(); }
+$estadoContacto = $_SESSION['contacto_estado'] ?? null;
+unset($_SESSION['contacto_estado']);
+?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <section id="contacto" class="seccion-contacto-moderna">
@@ -13,24 +18,29 @@
             <div class="contacto-form-section">
                 <p class="contacto-seguridad-txt">Tu información está segura con nosotros. Respondemos en 24h.</p>
                 <h3 class="contacto-form-titulo">Estamos para escucharte.</h3>
+                <?php if ($estadoContacto === 'ok'): ?>
+                    <div style="margin-bottom:14px;padding:10px 12px;border-radius:8px;background:#ecfdf3;color:#166534;border:1px solid #bbf7d0;">Mensaje enviado correctamente.</div>
+                <?php elseif ($estadoContacto === 'error'): ?>
+                    <div style="margin-bottom:14px;padding:10px 12px;border-radius:8px;background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;">No se pudo enviar el mensaje. Intenta nuevamente.</div>
+                <?php endif; ?>
                 
-                <form action="#" method="POST">
+                <form action="index.php?ruta=procesar-contacto" method="POST">
                     <div class="contacto-campos-grid">
                         <div class="contacto-input-group">
                             <label>Nombre Completo *</label>
-                            <input type="text" class="contacto-input" placeholder="Ej. Juan Pérez" required>
+                            <input type="text" name="nombre" class="contacto-input" placeholder="Ej. Juan Perez" required>
                         </div>
                         <div class="contacto-input-group">
                             <label>Teléfono de Contacto (opcional)</label>
-                            <input type="tel" class="contacto-input" placeholder="(55) 0000-0000">
+                            <input type="tel" name="telefono" class="contacto-input" placeholder="(55) 0000-0000">
                         </div>
                         <div class="contacto-input-group">
                             <label>Correo Electrónico *</label>
-                            <input type="email" class="contacto-input" placeholder="correo@ejemplo.com" required>
+                            <input type="email" name="email" class="contacto-input" placeholder="correo@ejemplo.com" required>
                         </div>
                         <div class="contacto-input-group">
                             <label>Asunto / Interés *</label>
-                            <select class="contacto-select" required>
+                            <select name="asunto" class="contacto-select" required>
                                 <option value="" disabled selected>Seleccione una opción</option>
                                 <option value="secundaria">Secundaria - Inscripciones</option>
                                 <option value="bachillerato">Bachillerato - Información general</option>
@@ -39,7 +49,7 @@
                         </div>
                         <div class="contacto-input-group ancho-completo">
                             <label>Tu Mensaje *</label>
-                            <textarea class="contacto-textarea" placeholder="Escribe tus dudas aquí..." required></textarea>
+                            <textarea name="mensaje" class="contacto-textarea" placeholder="Escribe tus dudas aquí..." required></textarea>
                         </div>
                     </div>
                     
